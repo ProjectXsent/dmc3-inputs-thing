@@ -192,7 +192,7 @@ bool ModFramework::on_message(HWND wnd, UINT message, WPARAM w_param, LPARAM l_p
 
         m_last_key = w_param;
 
-        if (w_param == VK_INSERT) {
+        if (w_param == VK_DELETE) {
             m_draw_ui = !m_draw_ui;
         }
         if (w_param == UIButton::ui_button_get_wparam()) {
@@ -269,13 +269,13 @@ void ModFramework::draw_ui() {
     ImGui::SetNextWindowPos(ImVec2(50, 50), ImGuiCond_::ImGuiCond_Once);
     ImGui::SetNextWindowSize(ImVec2(410, 600), ImGuiCond_::ImGuiCond_Once);
 
-    ImGui::Begin("ModFramework", &m_draw_ui);
+    ImGui::Begin("DMC3 Inputs Thing v1.03 (Gamepad Fix)", &m_draw_ui);
 
 #ifdef GIT_HASH
     ImGui::Text("Version: %s", GIT_HASH);
     ImGui::Text("Date: %s", GIT_DATE);
 #endif
-    ImGui::Text("Menu Key: Insert");
+    ImGui::Text("Menu Key: Delete");
 
     if (ImGui::Button("Save config")) {
         save_config();
@@ -305,6 +305,7 @@ void ModFramework::draw_about() {
     ImGui::TreePush("About");
 
     ImGui::Text("Authors: Siyan, endneo, cheburrat0r, deepdarkkapustka");
+    ImGui::Text("Contributors: ProjectXsent");
     ImGui::Text("https://github.com/muhopensores/dmc3-inputs-thing/");
     ImGui::NewLine();
     ImGui::Text("Inspired by RE2Framework/Kanan project.");

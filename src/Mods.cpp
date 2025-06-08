@@ -3,32 +3,32 @@
 #include "Config.hpp"
 
 //#inlcude "YourMod.hpp"
-#include "mods/SimpleMod.hpp"
+//#include "mods/SimpleMod.hpp"
 #include "mods/QuicksilverShader.hpp"
-#include "mods/InertiaThings.hpp"
-#include "mods/StyleSwitchFX.hpp"
+//#include "mods/InertiaThings.hpp"
+//#include "mods/StyleSwitchFX.hpp"
 #include "mods/PracticeMode.hpp"
-#include "mods/BulletStop.hpp"
+//#include "mods/BulletStop.hpp"
 #include "mods/UIButton.hpp"
 #include "mods/GamepadsFix.hpp"
 #include "mods/InputLog.hpp"
-#include "mods/AudioStutterFix.hpp"
+//#include "mods/AudioStutterFix.hpp"
 #include "mods/PrintfDebugging.hpp"
 #include "mods/DebugDraw.hpp"
 #include "mods/RgTimer.hpp"
-#include "mods/NoHeightRestriction.hpp"
+//#include "mods/NoHeightRestriction.hpp"
 // #include "mods/EnemySoulEaterNoInvis.hpp" // affects other enemies, commented out until I find some enemy ID compare
-#include "mods/TurnSpeed.hpp"
-#include "mods/EnemyStepCooldown.hpp"
-#include "mods/EnemyStates.hpp"
-#include "mods/EnemySpawnRate.hpp"
-#include "mods/CustomAlolcator.hpp"
-#include "mods/RendererReplace.hpp"
-#include "mods/AreaJump.hpp"
+//#include "mods/TurnSpeed.hpp"
+//#include "mods/EnemyStepCooldown.hpp"
+//#include "mods/EnemyStates.hpp"
+//#include "mods/EnemySpawnRate.hpp"
+//#include "mods/CustomAlolcator.hpp"
+//#include "mods/RendererReplace.hpp"
+//#include "mods/AreaJump.hpp"
 //#include "mods/StyleSwitcherInfo.hpp"
 //#include "mods/CameraHack.hpp"
 
-#define GAMEPLAY_HOOKS 1 // NOTE(): set 0 for speedrunner build
+#define SPEEDRUN_MODE 1
 
 Mods::Mods()
 {
@@ -40,20 +40,16 @@ Mods::Mods()
 }
 
 void Mods::load_time_critical_mods() {
-#ifdef DINPUT_HOOK
 	m_mods.emplace_back(std::make_unique<GamepadsFix>());
-#else
-    m_mods.emplace_back(std::make_unique<Mod>());
-#endif
-	m_mods.emplace_back(std::make_unique<CustomAlolcator>());
+	//m_mods.emplace_back(std::make_unique<CustomAlolcator>());
 	//m_mods.emplace_back(std::make_unique<YourMod>());
 }
 
 void Mods::load_mods() {
 #if 1
 	m_mods.emplace_back(std::make_unique<QuicksilverShader>());
-	m_mods.emplace_back(std::make_unique<AudioStutterFix>());
-#if GAMEPLAY_HOOKS
+	//m_mods.emplace_back(std::make_unique<AudioStutterFix>());
+#ifndef SPEEDRUN_MODE
 	m_mods.emplace_back(std::make_unique<InertiaThings>());
 	m_mods.emplace_back(std::make_unique<StyleSwitchFX>());
 	m_mods.emplace_back(std::make_unique<PracticeMode>()); // NOTE(): dont move this one [5]
@@ -63,9 +59,9 @@ void Mods::load_mods() {
 	m_mods.emplace_back(std::make_unique<Mod>());
 	m_mods.emplace_back(std::make_unique<Mod>());
 	m_mods.emplace_back(std::make_unique<Mod>());
-#endif // !GAMEPLAY_HOOKS
+#endif // !SPEEDRUN_MODE
 	m_mods.emplace_back(std::make_unique<UIButton>());
-#if GAMEPLAY_HOOKS
+#ifndef SPEEDRUN_MODE
 	m_mods.emplace_back(std::make_unique<InputLog>()); //NOTE(): dont move this one [8]
 	m_mods.emplace_back(std::make_unique<DebugDraw>()); //NOTE(): dont move this one [9]
     m_mods.emplace_back(std::make_unique<RgTimer>()); //NOTE(): dont move this one [10]
@@ -82,16 +78,16 @@ void Mods::load_mods() {
 	m_mods.emplace_back(std::make_unique<Mod>());
 	m_mods.emplace_back(std::make_unique<Mod>());
 	m_mods.emplace_back(std::make_unique<Mod>());
-#endif // !GAMEPLAY_HOOKS
+#endif // !SPEEDRUN_MODE
 
 	//m_mods.emplace_back(std::make_unique<StyleSwitcherInfo>()); // crashes half the time on boot, will replace
-	m_mods.emplace_back(std::make_unique<EnemySpawnRate>()); // ldk
+	//m_mods.emplace_back(std::make_unique<EnemySpawnRate>()); // ldk
 
-#if GAMEPLAY_HOOKS
+#ifndef SPEEDRUN_MODE
 	m_mods.emplace_back(std::make_unique<AreaJump>());
 #else 
 	m_mods.emplace_back(std::make_unique<Mod>());
-#endif // !GAMEPLAY_HOOKS
+#endif // !SPEEDRUN_MODE
 
 
 #endif
