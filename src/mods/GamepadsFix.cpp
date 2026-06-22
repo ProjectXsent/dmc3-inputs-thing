@@ -459,6 +459,18 @@ struct dummy_dinput8_device {
 		if (controller->state.DPadRight) {
 			lpvData->rgdwPOV[0] &= 9000;
 		}
+		if (controller->state.DPadUp && controller->state.DPadRight) { // DPad Up + Right
+    		lpvData->rgdwPOV[0] = 4500;
+		}
+		if (controller->state.DPadDown && controller->state.DPadRight) { // DPad Down + Right
+    		lpvData->rgdwPOV[0] = 13500;
+		}
+		if (controller->state.DPadDown && controller->state.DPadLeft) { // Dpad Down + Left
+    		lpvData->rgdwPOV[0] = 22500;
+		}
+		if (controller->state.DPadUp && controller->state.DPadLeft) { // DPad Up + Left
+    		lpvData->rgdwPOV[0] = 31500;
+		}
 
 		lpvData->lX = controller->state.RightStick.y >> 8;
 		lpvData->lY = controller->state.RightStick.x >> 8; // What the fuck capcom
