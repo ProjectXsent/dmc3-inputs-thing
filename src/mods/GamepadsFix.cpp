@@ -448,16 +448,16 @@ struct dummy_dinput8_device {
 		lpvData->rgdwPOV[0] = -1;
 		
 		if (controller->state.DPadUp) {
-			lpvData->rgdwPOV[0] &= 0;
+			lpvData->rgdwPOV[0] = 0;
 		}
 		if (controller->state.DPadDown) {
-			lpvData->rgdwPOV[0] &= 18000;
+			lpvData->rgdwPOV[0] = 18000;
 		}
 		if (controller->state.DPadLeft) {
-			lpvData->rgdwPOV[0] &= 27000;
+			lpvData->rgdwPOV[0] = 27000;
 		}
 		if (controller->state.DPadRight) {
-			lpvData->rgdwPOV[0] &= 9000;
+			lpvData->rgdwPOV[0] = 9000;
 		}
 		if (controller->state.DPadUp && controller->state.DPadRight) { // DPad Up + Right
     		lpvData->rgdwPOV[0] = 4500;
