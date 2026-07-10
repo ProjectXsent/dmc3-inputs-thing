@@ -18,12 +18,12 @@ std::optional<std::string> QuicksilverShader::on_initialize() {
 // TODO() save/load
 // during load
 void QuicksilverShader::on_config_load(const utility::Config &cfg) {
-	m_current_type = cfg.get<int>("SlowmoShaderType").value_or(false);
+	m_current_type = cfg.get<int>("Quicksilver_Shader_Preset").value_or(false);
 	create_shader_program((shader_type)m_current_type);
 }
 // during save
 void QuicksilverShader::on_config_save(utility::Config &cfg) {
-	cfg.set<int>("SlowmoShaderType", m_current_type);
+	cfg.set<int>("Quicksilver_Shader_Preset", m_current_type);
 }
 // do something every frame
 static int counter = 0;
