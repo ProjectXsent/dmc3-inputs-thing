@@ -16,7 +16,7 @@
 static GamepadsFix* g_gamepad_mod_inst_ptr;
 static std::vector<SDLGamepad*> g_gamepads;
 
-bool ifEmulatingXboxController;
+bool SDLInputEnabled;
 
 // TODO(): too tired not doing that anytime soon
 class PadVibeStuffStatic
@@ -84,12 +84,12 @@ void GamepadsFix::on_draw_ui() {
 		return;
 	}
 	ImGui::TextWrapped("Check the following checkbox if you are using or emulating an xbox controller. This will set the default controls to match PS4 so the following fixes are correctly applied. Press save config after, then reset the game. This might also be necessary for other setups but i cba to restart to check. If you have not renamed your ini, this will do nothing.");
-	ImGui::Checkbox("Emulating or using an xbox controller", &ifEmulatingXboxController);
+	ImGui::Checkbox("Enable SDL Input", &SDLInputEnabled);
 
-	ImGui::TextWrapped("To get this working rename dmc3se.ini in the game root to something else and restart the game, this would replace dinput8 stuff with SDL2 for better gamepad support. Hooks need to be installed on launch so restart is required.");
+	//ImGui::TextWrapped("To get this working rename dmc3se.ini in the game root to something else and restart the game, this would replace dinput8 stuff with SDL2 for better gamepad support. Hooks need to be installed on launch so restart is required.");
 	ImGui::Text("Window focus: %d", g_framework->get_window_focus());
 
-	ImGui::TextWrapped("You can select what controller to use below, keep in mind this is zero indexed. First controller - 0, second controller - 1 etc.");
+	ImGui::TextWrapped("You can select what controller to use below, keep in mind this is zero indexed. (First controller - 0, second controller - 1, etc.).");
 	if (ImGui::InputInt("Gamepad index: ", &m_gamepad_index, 1, 1)) {
 		m_gamepad_index = glm::clamp<int>(m_gamepad_index, 0, g_gamepads.size() - 1);
 	}
@@ -606,13 +606,13 @@ int _cdecl GamepadsFix::Dinput8Create_sub_404BB0(HWND hWnd)
 void GamepadsFix::on_config_load(const utility::Config& cfg) {
   bool dmc_ini_exists = _waccess_s(L"dmc3se.ini", 00) != ENOENT;
   if (!dmc_ini_exists) {
-  ifEmulatingXboxController = cfg.get<bool>("emulating_xbox_controller").value_or(true);
-  patchcontrols = Patch::create(0x00405D34, default_controls_bytes(), (ifEmulatingXboxController));
+  SDLInputEnabled = cfg.get<bool>("Enable_SDL_Input").value_or(true);
+  patchcontrols = Patch::create(0x00405D34, default_controls_bytes(), (SDLInputEnabled));
   }
 };
 
 void GamepadsFix::on_config_save(utility::Config& cfg) {
-  cfg.set<bool>("emulating_xbox_controller", ifEmulatingXboxController);
+  cfg.set<bool>("Enable_SDL_Input", SDLInputEnabled);
 };
 
 #endif
