@@ -445,31 +445,36 @@ struct dummy_dinput8_device {
 		
 		//dpad
 		//r 9000 u 0 l 27000 d 18000
+		bool DPadUp			= controller->state.DPadUp;
+		bool DPadRight		= controller->state.DPadRight;
+		bool DPadDown		= controller->state.DPadDown;
+		bool DPadLeft		= controller->state.DPadLeft;
+
 		lpvData->rgdwPOV[0] = -1;
-		
-		if (controller->state.DPadUp) {
-			lpvData->rgdwPOV[0] = 0;
+
+		if (DPadUp && DPadRight) {
+			lpvData->rgdwPOV[0] = 4500;
 		}
-		if (controller->state.DPadDown) {
-			lpvData->rgdwPOV[0] = 18000;
+		else if (DPadDown && DPadRight) {
+			lpvData->rgdwPOV[0] = 13500;
 		}
-		if (controller->state.DPadLeft) {
-			lpvData->rgdwPOV[0] = 27000;
-		}
-		if (controller->state.DPadRight) {
-			lpvData->rgdwPOV[0] = 9000;
-		}
-		if (controller->state.DPadUp && controller->state.DPadRight) { // DPad Up + Right
-    		lpvData->rgdwPOV[0] = 4500;
-		}
-		if (controller->state.DPadDown && controller->state.DPadRight) { // DPad Down + Right
-    		lpvData->rgdwPOV[0] = 13500;
-		}
-		if (controller->state.DPadDown && controller->state.DPadLeft) { // Dpad Down + Left
+		else if (DPadDown && DPadLeft) {
     		lpvData->rgdwPOV[0] = 22500;
 		}
-		if (controller->state.DPadUp && controller->state.DPadLeft) { // DPad Up + Left
+		else if (DPadUp && DPadLeft) {
     		lpvData->rgdwPOV[0] = 31500;
+		}
+		else if (DPadUp) {
+    		lpvData->rgdwPOV[0] = 0;
+		}
+		else if (DPadRight) {
+    		lpvData->rgdwPOV[0] = 9000;
+		}
+		else if (DPadDown) {
+    		lpvData->rgdwPOV[0] = 18000;
+		}
+		else if (DPadLeft) {
+    		lpvData->rgdwPOV[0] = 27000;
 		}
 
 		lpvData->lX = controller->state.RightStick.y >> 8;
