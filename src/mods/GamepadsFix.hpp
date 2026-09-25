@@ -8,7 +8,7 @@ class GamepadsFix : public Mod {
 public:
 	GamepadsFix() = default;
   // mod name string for config
-  std::string_view get_name() const override { return "GamepadFixes"; }
+  std::string_view get_name() const override { return "Gamepad Fixes"; }
   // called by m_mods->init() you'd want to override this
   std::optional<std::string> on_initialize() override;
 
